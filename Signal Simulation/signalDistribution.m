@@ -1,0 +1,79 @@
+% Function to calculate signal pdf distribution given an set of scan
+% paramaters, a set of tissue parameters, a T2 value, and a noise sigma
+
+function [signaldist, signals] = signalDistribution(scan_params, tissue_params, opts)
+
+arguments
+    scan_params % Vector of scan parameters [delta, Delta, b, TE, TR, Nav_ratio]
+
+    tissue_params % Vector of tissue volume fractions 
+    
+    % verdict: [fR1, fR2, ..., fEES, fVASC]
+    % no VASC: [fR1, fR2, ..., fEES]
+    % RDI: [fRdist1, fRdist2, ..., fEES]
+    % RDI v1.3 [fIC, R, fEES]
+    % RDI v1.4 [fIC, muR, sigmaR, fEES]
+
+    % Options
+    opts.modeltype = 'Original VERDICT'
+    opts.T2 = 100 % T2 value
+    opts.TEconst = 22 % TE = delta + Delta + TEconst 
+    opts.sigma0 = 0.05 % TE=0 noise level
+
+    opts.zmin = 0
+    opts.zmax = 2
+    opts.dz = 0.005
+
+end
+
+% Simulate diffusion signal
+Ab = simulateSignal(tissue_params, scan_params, opts.modeltype);
+
+% Acount for T2 decay of b=0 signal
+delta = scan_params(1);
+Delta = scan_params(2);
+
+try
+    TE = scan_params(4);
+catch
+    TE = delta + Delta + opts.TEconst;
+end
+
+
+try
+    Nav_ratio = scan_params(6);
+catch
+    Nav_ratio = 1;
+end
+
+
+A0 = exp(-TE/opts.T2);
+
+% Scale diffusion signal by b=0 signal
+Ab = Ab*A0;
+
+% == Using predefined dictionary
+
+% % Load DistStruct from
+% DistStruct = evalin('base', 'DistStruct');
+% dA = DistStruct.dA;
+% IndxFinder = DistStruct.IndxFinder;
+% signals = DistStruct.zs;
+% 
+% % Find indices
+% A0indx = IndxFinder(A0, dA);
+% Abindx = IndxFinder(Ab, dA);
+% 
+% % Find signal distribution
+% signaldist = squeeze( DistStruct.DistArray(A0indx, Abindx, :));
+
+
+% == Calculating on the fly
+zs = linspace(opts.zmin, opts.zmax, (opts.zmax-opts.zmin)/opts.dz + 1);
+
+% Calculate Rician ratio distribution
+signaldist = RatioDistRician(A0, Ab, opts.sigma0, Nav_ratio = Nav_ratio, zmin = opts.zmin, zmax = opts.zmax, dz = opts.dz);
+signals = zs;
+
+
+end

@@ -1,0 +1,130 @@
+% Function to compare median lesion fIC values from different 
+function [fig, stats, protocols] = verdictBlandAltman(PatNums, modeltypes, schemenames, fittingtypes, opts)
+
+arguments
+
+    PatNums % Array of patient numbers
+    modeltypes % Specify one or two model types for comparison (char array)
+    schemenames % Specify one or two scheme names for comparison (char array)
+    fittingtypes % Specify one or two fitting technques for comparison (char array)
+
+    % OPTIONS
+    opts.protocolnames 
+
+    opts.sigma0train = 0.05 % Noise level used in MLP training
+ 
+    opts.parameter = "fIC" % Parameter for lesion characterisation 
+    opts.scoretype = "median"
+
+    opts.ROIdrawer = "NT"
+    opts.ROIname = "L1_b3000_NT"
+    opts.ROIfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\ROIs"
+
+end
+
+%% Read output folder
+output_folder = fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Code\VERDICT-Screening\output_folder.txt");
+
+
+%% Sorting out inputs
+
+if ischar(modeltypes)
+    modeltypes = {modeltypes};
+end
+
+if ischar(schemenames)
+    schemenames = {schemenames};
+end
+
+if ischar(fittingtypes)
+    fittingtypes = {fittingtypes};
+end
+
+
+
+Nmodels = length(modeltypes);
+Nschemes = length(schemenames);
+Nfittypes = length(fittingtypes);
+Nsigma0train = length(opts.sigma0train);
+
+Nprotocols = max([Nmodels, Nschemes, Nfittypes, Nsigma0train]);
+
+if Nprotocols ~= 2
+    error('Need to define two protocols!')
+end
+
+if Nmodels == 1
+    modeltypes = repmat( modeltypes , 1, Nprotocols);
+    Nmodels = length(modeltypes);
+end
+
+if Nschemes == 1
+    schemenames = repmat( schemenames , 1, Nprotocols);
+    Nschemes = length(schemenames);
+end
+
+if Nfittypes == 1
+    fittingtypes = repmat( fittingtypes , 1, Nprotocols);
+    Nfittypes = length(fittingtypes);
+end
+
+if length(opts.sigma0train) == 1
+    opts.sigma0train = repmat(opts.sigma0train, 1, Nprotocols);
+elseif length(opts.sigma0train) ~= Nprotocols
+    error('sigma0train array must be same length and number of protocols')
+end
+
+
+%% Quantitative analysis
+
+
+values = pyrunfile( ...
+    'RunBlandAltman.py', ...
+    'values',...
+    PatNums = PatNums, ...
+    modeltypes = modeltypes,...
+    schemenames =  schemenames,...
+    fittingtechniques = fittingtypes,...
+    sigma0train = opts.sigma0train,...
+    parameter = opts.parameter,...
+    scoretype = opts.scoretype,...
+    datafolder = output_folder,...
+    ROIdrawer = opts.ROIdrawer,...
+    ROIname = opts.ROIname,...
+    ROIfolder = opts.ROIfolder...
+    );
+
+values = double(values);
+
+
+%% Bland Altman figure
+try
+    [fig, stats] = myBlandAltman(values(1,:), values(2,:), Data1Label = opts.protocolnames{1}, Data2Label = opts.protocolnames{2});
+catch
+    [fig, stats] = myBlandAltman(values(1,:), values(2,:), Data1Label = 'Protocol 1', Data2Label = 'Protocol 2');
+end
+
+% == Make table of protocol information
+Protocols = struct();
+
+for protIndx = 1:Nprotocols
+
+    Protocols(protIndx).Number = protIndx;
+    Protocols(protIndx).ModelType = modeltypes{protIndx};
+    Protocols(protIndx).SchemeName = schemenames{protIndx};
+    Protocols(protIndx).FittingType = fittingtypes{protIndx};
+    Protocols(protIndx).sigma0train = opts.sigma0train(protIndx);
+
+end
+
+protocolTable = struct2table(Protocols);
+
+
+% Convert Table to cell to char array
+tableCell = [protocolTable.Properties.VariableNames; table2cell(protocolTable)]; 
+tableCell(cellfun(@isnumeric,tableCell)) = cellfun(@num2str, tableCell(cellfun(@isnumeric,tableCell)),'UniformOutput',false); 
+protocols = splitapply(@strjoin,pad(tableCell),[1;2;3]);
+
+
+
+end

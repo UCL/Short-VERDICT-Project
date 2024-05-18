@@ -1,0 +1,13 @@
+% MATLAB script to display 
+
+%% DRAG IMAGE INTO WORKSPACE
+
+% Do that^
+
+
+%% Define slice and range
+
+slice = 5;
+
+ys = 60:
+xs = 55:
