@@ -26,7 +26,8 @@ mu = Ab/A0;
 Dist = makedist('Rician', s=mu, sigma = sigma );
 
 % Evaluate pdf at signals
-signals = linspace(opts.zmin, opts.zmax, (opts.zmax-opts.zmin)/opts.dz +1);
+N = ceil(((opts.zmax-opts.zmin)/opts.dz)+1);
+signals = linspace(opts.zmin, opts.zmax, N);
 dist = Dist.pdf(signals);
 
 
