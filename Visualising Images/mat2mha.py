@@ -16,16 +16,16 @@ OutputFolder = str(open('output_folder.txt', 'r').read())
 PatNums = [os.path.basename(path) for path in 
            glob.glob(r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Outputs\fIC ROIs\*")]
 
-PatNums = ["shV_20240307"]#, "INN_175", "INN_145", "INN_209", "INN_241"]
+PatNums = ["BAR_038"]#, "INN_175", "INN_145", "INN_209", "INN_241"]
 
 
 model = 'New VERDICT'  
 
-modeltype = 'No VASC VERDICT'
+modeltype = 'Original VERDICT'
 
-schemename = 'Short Scheme v1'
+schemename = 'Original Full'
 
-fittingtechnique = 'MLP'
+fittingtechnique = 'AMICO'
 
 noisetype = 'Rice'
 

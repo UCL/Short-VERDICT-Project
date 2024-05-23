@@ -28,8 +28,8 @@ def saveROImask(
                 PatNum, 
                 ROIdrawer,
                 ROIName, 
-                datafolder = r"D:\UCL PhD Imaging Data\INNOVATE VERDICT", 
-                ROIfolder = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\ROIs",
+                datafolder = r"C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAGES", 
+                ROIfolder = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\INNOVATE\ROIs",
 ):
     '''
     Function to save mask of ROI in RTStruct file.
@@ -58,13 +58,16 @@ def saveROImask(
 
         print('2')
         print(b3000_DICOM_fnames)
+
+
+  
     # Test if DICOM MF or SF
     if len(b3000_DICOM_fnames) == 1:
         # MF
         multiframe = True
         b3000_DICOM_fname = b3000_DICOM_fnames[0]
         b3000dcm = DICOM.MRIDICOM(b3000_DICOM_fname)
-        
+
     elif len(b3000_DICOM_fnames) > 1:
         # SF
         multiframe = False
@@ -92,9 +95,11 @@ def saveROImask(
     # Instantiate contours object
     contours = DICOM.contours(RTStruct_fname)
 
+
     # Define lesion structure number (hardcoded here but should be found automatically in future)
     LesionStructNum = contours.Struct_Name_Num_dict[ROIName]
  
+
 
     LesionMask = contours.create_mask(Struct_Num = LesionStructNum, DICOM_dcm = b3000dcm)
 
@@ -261,9 +266,12 @@ def extractROIvalues(
     # # Save fIC image as mha
     # sitk.WriteImage(sitk.GetImageFromArray(fIC), f'{VERDICT_output_path}/{PatNum}/{ModelName}/{parameter}.mha')
     
+
+
+
 # Function to read biopsy results     
 def readBiopsyResults(
-    biopsy_data_xlsx = r'C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\INNOVATE patient groups 2.0.xlsx',
+    biopsy_data_xlsx = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\INNOVATE\Biopsy Results.xlsx",
     results_path = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Outputs\Biopsy Results"
 ):
     
@@ -275,14 +283,14 @@ def readBiopsyResults(
     BiopsyDF = pd.read_excel(biopsy_data_xlsx)
     
     # Clinically significant patients
-    csPats = list( (BiopsyDF['Clinically significant (Gleason >=7)'].values)[1:] )
+    csPats = list( (BiopsyDF['Clinically significant (Gleason >=7)'].values) )
     
     
     # Ones (binary 1 for cs)
     ones = list(np.ones(len(csPats)))
     
     # Non-clincially significant patients 
-    ncsPats = list( (BiopsyDF['Clinically insignificant (Gleason <7)'].values)[1:] )
+    ncsPats = list( (BiopsyDF['Clinically insignificant (Gleason <7)'].values) )
     
     # Zeros (binary 0 for ncs)
     zeros = list(np.zeros(len(ncsPats)))
@@ -296,6 +304,8 @@ def readBiopsyResults(
     
     # Save as matlab structure
     savemat(f'{results_path}/BiopsyResultsDF.mat', {'BiopsyResults': BiopsyResultsDF.to_dict(orient = 'list')})
+
+    
  
     
 def trainPerceptron(

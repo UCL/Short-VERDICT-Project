@@ -1,0 +1,8 @@
+function EX = expectedvalue(func, pdf, zs)
+
+func = reshape(func, size(pdf));
+
+% Function to calculate expected value of distribution over signal array zs
+EX = trapz( func.*pdf);
+
+end

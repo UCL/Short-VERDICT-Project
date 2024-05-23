@@ -1,0 +1,57 @@
+function experiment = evaluate_dfdR(experiment)
+
+arguments
+
+    % Structure containing experiment detail
+    experiment
+
+end
+
+% Function evaluates dfdR for each scan in scheme, for each element of the
+% prior grid.
+
+scheme = experiment.scheme;
+priorgrid = experiment.priorgrid;
+
+
+% Loop over scans/scheme elements
+for scanIndx = 1:length(scheme)
+
+    % Read scan params
+    scan_params = [scheme(scanIndx).delta, scheme(scanIndx).DELTA, scheme(scanIndx).bval, scheme(scanIndx).TE];
+
+    % Loop over prior grid of tissue parameters
+    for paramsIndx = 1:length(priorgrid)
+
+
+        % define parameter step size
+        dR = experiment.options.Rstepsize;
+        
+        % Define step up and down params (case dependent)
+        paramsUp = tissue_params;
+        paramsDown = tissue_params;
+        
+        if tissue_params(paramIndx) == 0
+        
+            paramsUp(2) = paramsUp(2) + dR;
+            deltaparam = dparam;
+        
+        elseif tissue_params(paramIndx) == 1
+        
+            paramsDown(2) = paramsDown(2) - dR;
+            deltaparam = dR;
+        
+        else
+            paramsUp(2) = paramsUp(2) + dR;
+            paramsDown(2) = paramsDown(2) - dR;
+            deltaparam = 2*dR;
+        
+        end
+
+
+
+
+    end
+
+
+end

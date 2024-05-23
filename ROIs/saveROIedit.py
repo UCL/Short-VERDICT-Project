@@ -5,10 +5,10 @@ import SimpleITK as sitk
 # Read output folder
 OutputFolder = str(open('output_folder.txt', 'r').read())
 
-ROIfolder = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\ROIs"
+ROIfolder = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\INNOVATE\ROIs"
 
 # Patient number
-PatNum = 'INN_291'
+PatNum = 'BAR_038'
 
 # ROI drawer 
 ROIdrawer = 'NT'

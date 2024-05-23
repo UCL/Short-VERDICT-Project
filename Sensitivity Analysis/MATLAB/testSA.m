@@ -1,12 +1,12 @@
 % Testing sensitivity analysis function
 
-% Read list of patient numbers with ROIs
-PatNums = dir("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\ROIs\NT\DICOM");
+% Read list of patient numbers included in INNOVATE trial
+PatNums = dir("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\INNOVATE\INNOVATE STUDY COHORT VERDICT IMAGES");
 PatNums = {PatNums.name};
 PatNums = PatNums(3:end);
 
 % Exclude
-exclude = {'BAR_039', 'BAR_051', 'INN_168', 'INN_198', 'INN_201', 'INN_241', 'INN_278', 'INN_155', 'INN_169'};
+exclude = {'INN_377', 'INN_378'};
 
 for pat = exclude
     where = (string(PatNums) == pat);

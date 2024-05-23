@@ -18,13 +18,13 @@ arguments
 
     opts.ROIdrawer = "NT"
     opts.ROIname = "L1_b3000_NT"
-    opts.ROIfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\ROIs"
+    opts.ROIfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\INNOVATE\ROIs"
     
 end
 
 
 %% Read output folder
-output_folder = fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Code\VERDICT-Screening\output_folder.txt");
+output_folder = fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\output_folder.txt");
 
 %% Call Python script to run first half of analysis
 % 
@@ -118,7 +118,8 @@ for cindx = 1:(length(combos)/3)
     % Fill in biopsy results for scores structure
     BiopsyPatNums = string(BiopsyResults.Patient_ID);
     for patindx = 1:length(BiopsyPatNums)
-        PatNum = BiopsyPatNums(patindx);
+        PatNum = char(BiopsyPatNums(patindx));
+        PatNum = string(PatNum(1:7));
         where =  ( string( scores(cindx).PatNums ) == PatNum );
         scores(cindx).biopsyresults(where) = BiopsyResults.Biopsy_Result(patindx);
     end

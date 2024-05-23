@@ -6,7 +6,7 @@ import os
 import numpy as np
 
 # Import fIC analysis functions
-sys.path.insert(0,r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Code\VERDICT-Screening\General Code\Sensitivity Analysis")
+sys.path.insert(0,r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Sensitivity Analysis")
 import sensitivity #type: ignore
 
 
@@ -21,7 +21,7 @@ def RunSensitivityAnalysis(
     noisetype = 'Rice',
     sigma0train = 0.05,
     T2train=10000,
-    datafolder = str(open(r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Code\VERDICT-Screening\output_folder.txt", 'r').read()),
+    datafolder = '',
     ROIdrawer = 'NT',
     ROIname = 'L1_b3000_NT',
     ROIfolder = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\ROIs"
@@ -116,6 +116,7 @@ def RunSensitivityAnalysis(
                         PatNum,
                         ROIdrawer,
                         ROIname,
+                        datafolder = datafolder,
                         ROIfolder = ROIfolder
                         )
                     goodPatNums.append(PatNum)
@@ -124,6 +125,7 @@ def RunSensitivityAnalysis(
                 
 
         print(len(goodPatNums))
+        
         # Extract parameter values from ROIs
         for PatNum in goodPatNums:
             
@@ -150,12 +152,12 @@ def RunSensitivityAnalysis(
         
         print(len(PatNums))
         
-        
+        results_path = f'{datafolder}/Biopsy Results'
         # == Read biopsy results
         sensitivity.readBiopsyResults(
-            biopsy_data_xlsx = r'C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\INNOVATE patient groups 2.0.xlsx',
-            results_path = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Outputs\Biopsy Results"
-        )
+            biopsy_data_xlsx = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\INNOVATE\Biopsy Results.xlsx",
+            results_path = results_path
+            )
         
         
         # == If scoring method requires model training, do this here
@@ -195,18 +197,14 @@ def RunSensitivityAnalysis(
             results_path = rf"{datafolder}\ROI Scores",
         )           
         
-        
-
-
-    
-    
+      
     
     
         
 # RunSensitivityAnalysis(['BAR_003', 'BAR_033', 'INN_175', 'INN_145', 'INN_209', 'BAR_010','INN_241'], ['Original VERDICT'], ['Original Full'], ['MLP'], ['fIC', 'T2'], scoretype = 'perceptron')
 
     
-    
+# datafolder = str(open(datafolder, 'r').read())    
     
 RunSensitivityAnalysis(
     PatNums,
