@@ -13,7 +13,7 @@ thesescores.scores = transpose(scores(indx).scores);
 T = struct2table(thesescores)
 Tsorted = sortrows(T, 'scores')
 
-save('tolookattable.mat', 'T')
+save('tolookattable.mat', 'Tsorted')
 
 % To look at:
 

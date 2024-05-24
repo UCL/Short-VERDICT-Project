@@ -6,9 +6,10 @@ import glob
 import sys
 import os
 
-# Import fIC analysis functions
-sys.path.insert(0, r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Sensitivity Analysis")
-import sensitivity # type: ignore
+import ROI
+# # Import fIC analysis functions
+# sys.path.insert(0, r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Sensitivity Analysis\Python")
+# import sensitivity # type: ignore
 
 
 # ROI folder
@@ -21,7 +22,7 @@ datafolder = r"C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAG
 ROIdrawer = 'NT'
 
 # ROI Name
-ROIName = 'L1_b3000_contour'
+ROIName = 'L1_b3000_NT'
 
 
 
@@ -30,7 +31,7 @@ ROIName = 'L1_b3000_contour'
 
 # PatNums = [ os.path.basename(fname) for fname in fnames  ]
     
-PatNums = ['BAR_054']
+PatNums = ['BAR_003']
 # PatNums = [
 #     'INN_353',
 #     'INN_361',
@@ -72,7 +73,7 @@ PatNums = ['BAR_054']
 for PatNum in PatNums:
     
     print(PatNum)
-    sensitivity.saveROImask(
+    ROI.saveROImask(
         PatNum, 
         ROIdrawer = ROIdrawer,
         ROIName = ROIName,

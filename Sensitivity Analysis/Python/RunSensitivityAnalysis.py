@@ -6,8 +6,14 @@ import os
 import numpy as np
 
 # Import fIC analysis functions
-sys.path.insert(0,r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Sensitivity Analysis")
+sys.path.insert(0,r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Sensitivity Analysis\Python")
 import sensitivity #type: ignore
+
+# Import ROIs function
+sys.path.insert(0, r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\ROIs")
+import ROI # type: ignore
+
+
 
 
 def RunSensitivityAnalysis(
@@ -112,7 +118,7 @@ def RunSensitivityAnalysis(
                 # print(f'Saving ROI mask for... {PatNum}')
                 
                 try:
-                    sensitivity.saveROImask(
+                    ROI.saveROImask(
                         PatNum,
                         ROIdrawer,
                         ROIname,
@@ -150,7 +156,6 @@ def RunSensitivityAnalysis(
         # Only carry forward patients with ROI
         PatNums = goodPatNums
         
-        print(len(PatNums))
         
         results_path = f'{datafolder}/Biopsy Results'
         # == Read biopsy results

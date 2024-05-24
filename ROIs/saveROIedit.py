@@ -8,7 +8,7 @@ OutputFolder = str(open('output_folder.txt', 'r').read())
 ROIfolder = r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\INNOVATE\ROIs"
 
 # Patient number
-PatNum = 'BAR_038'
+PatNum = 'INN_291'
 
 # ROI drawer 
 ROIdrawer = 'NT'

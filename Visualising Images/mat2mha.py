@@ -1,4 +1,4 @@
-# Python script to convert .mat image volume files to mha so hey can be viewed in ITK SNAP
+# Python script to convert .mat image volume files to mha so they can be viewed in ITK SNAP
 
 # Import relevant libraries
 import SimpleITK as sitk
@@ -16,7 +16,7 @@ OutputFolder = str(open('output_folder.txt', 'r').read())
 PatNums = [os.path.basename(path) for path in 
            glob.glob(r"C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Outputs\fIC ROIs\*")]
 
-PatNums = ["BAR_038"]#, "INN_175", "INN_145", "INN_209", "INN_241"]
+PatNums = ["INN_291"]#, "INN_175", "INN_145", "INN_209", "INN_241"]
 
 
 model = 'New VERDICT'  

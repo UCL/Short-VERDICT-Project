@@ -3,30 +3,25 @@
 %% Define study path (path to folder containing patients)
 % 
 % % INNOVATE
-% STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\INNOVATE STUDY COHORT VERDICT IMAGES";
+% STUDY_path = "C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAGES";
 
-% Patient volunteers (Full VERDICT)
-STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Imaging Data\Patient Volunteers\Original VERDICT";
+% % Patient volunteers (Full VERDICT)
+% STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Original VERDICT";
 
-% % Patient volunteers (Short VERDICT)
-% STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Imaging Data\Patient Volunteers\Short VERDICT";
-
+% Patient volunteers (Short VERDICT)
+STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Short VERDICT";
 
 %% Define patient numbers
 
-PatNums = {"shV_20240307"};% "INN_175"; "INN_145"; "INN_209"; "INN_241"];
+% FOR VOLUNTEERS
+PatNums = {"shV_20240410"};
 
-% % Read list of patents with downloaded data
-% PatTable = readtable("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\INNOVATE Data\DownloadedPatNums.xlsx", ReadVariableNames=false);
-% 
-% PatNums = string( PatTable{:,1} );
-
-
+% % FOR INNOVATE
 % x = dir(STUDY_path);
 % PatNums = {x(:).name};
 % PatNums = transpose(PatNums(3:end));
 
-%% Define output folder
+%% DEFINE FOLDERS
 
 % Define output folder
 OutputFolder = string(fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\output_folder.txt"));
@@ -40,31 +35,26 @@ modelsfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Y
 % Define python folder
 pythonfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Model Fitting\MLP\Python";
 
-%% ======== Define protocol: model type, schemename, fitting technique
 
+%% DEFINE VERDICT PROTOCOL
 
 % === Model type
 modeltype = 'Original VERDICT'; 
 
 % === Scheme name
-% schemename =   'Original Full';
-schemename = 'Original ex905003000';
-% schemename = 'Short Scheme v1';
+schemename = 'Short Scheme v1';
 
-% fitting technique
-fittingtechnique =   'MLP' ;
+% === fitting technique
+fittingtechnique =   'MLP';
 
-% Noise used in MLP training
+% === Noise used in MLP training
 noisetype='Rice';
 sigma0train = 0.05;
 T2train = 10000;
 
-
-% T2
-calcT2 = false;
-
-% ADC
+% === ADC
 calcADC = true;
+% Max b value
 vADCbmax = 1001;
 
 
@@ -85,7 +75,6 @@ for indx = 1:size(PatNums,1)
         schemesfolder = schemesfolder,...
         modelsfolder = modelsfolder,...
         pythonfolder = pythonfolder,...
-        calcT2 = calcT2,...
         calcADC = calcADC,...
         vADCbmax = vADCbmax...
         );

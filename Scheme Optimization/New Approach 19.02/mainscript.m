@@ -54,9 +54,7 @@ options = struct();
 options.Rstepsize = 0.1;
 options.fICstepsize = 0.01;
 
-
 experiment.options = options;
-
 
 %% Evaluate PDF
 experiment = evaluate_pdf(experiment);

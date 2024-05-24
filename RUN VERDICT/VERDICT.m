@@ -28,11 +28,7 @@ arguments
     % Other calculations
     opts.calcADC = false
     opts.vADCbmax = 1001
-    opts.calcT2 = false
 
-    opts.luminal_fit = false
-    opts.luminal_model = 'Luminal v1.4'
-    opts.luminal_sigma0train = 0.01
 end
 
 % Define DICOM folder path
@@ -46,36 +42,19 @@ end
 
 switch opts.fittingtechnique
 
-    % case 'MLP'
-    %     % Define output folder
-    %     output_path = join([opts.parent_folder "/VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num "/sigma0 = " num2str(opts.sigma0train)], "");
-    % 
-    %     % Define luminal water output path
-    %     luminal_output_path = join([opts.parent_folder "/LUMINAL outputs/" string(opts.luminal_model) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num "/sigma0 = " num2str(opts.luminal_sigma0train)], "");
-    % 
     case 'MLP'
         % Define output folder
         output_path = join([opts.parent_folder "/New VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num "/" string(opts.noisetype) "/T2_" string(opts.T2train) "/sigma_" num2str(opts.sigma0train)], "");
 
-        % % Define luminal water output path
-        % luminal_output_path = join([opts.parent_folder "/New LUMINAL outputs/" string(opts.luminal_model) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num "/sigma0 = " num2str(opts.luminal_sigma0train)], "");
-        % 
     case 'AMICO'
         % Define output folder
         output_path = join([opts.parent_folder "/New VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num ], "");
 
-        % % Define luminal water output path
-        % luminal_output_path = join([opts.parent_folder "/LUMINAL outputs/" string(opts.luminal_model) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num], "");
-        % 
 end
 
 if ~exist(output_path, "dir")
    mkdir(output_path)
 end
-
-% if ~exist(luminal_output_path, "dir")
-%    mkdir(luminal_output_path)
-% end
 
 
 %% Apply VERDICT processing
@@ -112,13 +91,8 @@ switch opts.modeltype
             Rs = Rs,...
             solver = opts.solver,...
             calcADC = opts.calcADC,...
-            vADCbmax = opts.vADCbmax,...
-            calcT2 = opts.calcT2);
-            % luminal_fit = opts.luminal_fit,...
-            % luminal_model = opts.luminal_model,...
-            % luminal_sigma0train = opts.luminal_sigma0train,...
-            % luminal_output_path = luminal_output_path...
-            % );
+            vADCbmax = opts.vADCbmax);
+  
 
 
     case 'No VASC VERDICT'
@@ -146,32 +120,8 @@ switch opts.modeltype
             ncompart = ncompart, ...
             solver = opts.solver,...
             calcADC = opts.calcADC,...
-            calcT2 = opts.calcT2...
-            );
+            vADCbmax = opts.vADCbmax);
 
-    % case 'RDI'
-    % 
-    %     ncompart = 1;
-    %     fitting = 'RDI';
-    %     Rs = linspace(0.1, 15.1, 17);
-    % 
-    %     % Run VERDICT processing code
-    %     [scheme, Y, fIC, fEES, fVASC, R, rmse] = verdict_Adam( ...
-    %         convertStringsToChars(DICOM_path), ...
-    %         convertStringsToChars(output_path), ...
-    %         PatientID = pat_num,...
-    %         parent_folder = opts.parent_folder,...
-    %         schemesfolder = opts.schemesfolder,...
-    %         modeltype = opts.modeltype,...
-    %         schemename = opts.schemename,...
-    %         fittingtechnique = opts.fittingtechnique,...
-    %         sigma0train = opts.sigma0train,...
-    %         fitting = fitting,...
-    %         ncompart = ncompart, ...
-    %         solver = opts.solver,...
-    %         calcADC = opts.calcADC,...
-    %         calcT2 = opts.calcT2...
-    %         );
 
     case 'RDI v1.3'
 
@@ -198,8 +148,7 @@ switch opts.modeltype
             ncompart = ncompart, ...
             solver = opts.solver,...
             calcADC = opts.calcADC,...
-            calcT2 = opts.calcT2...
-            );
+            vADCbmax = opts.vADCbmax);
 
     % case 'RDI v1.4'
     % 
@@ -230,97 +179,17 @@ switch opts.modeltype
 end
 
 
-% 
-% % Model: 'Original VERDICT'
-% if strcmp(optmodeltype, 'Original VERDICT')
-% 
-%     ncompart = 2;
-% 
-%     % Run VERDICT processing code
-%     [scheme, Y, fIC, fEES, fVASC, R, rmse] = verdict_Adam( ...
-%         convertStringsToChars(DICOM_path), ...
-%         convertStringsToChars(output_path), ...
-%         fittingtechnique = opts.fittingtechnique,...
-%         fitting = opts.fitting,...
-%         ncompart = ncompart, ...
-%         solver = opts.solver...
-%         );
-% 
-% % Model: 'Original VERDICT, ex. 90, 3000' 
-% elseif strcmp(model_type, 'Original VERDICT, ex. 90, 3000')
-% 
-%     ncompart = 2;
-%     fitting_excludebvals = [90, 3000];
-% 
-%     % Run VERDICT processing code
-%     [scheme, Y, fIC, fEES, fVASC, R, rmse] = verdict_Adam( ...
-%         convertStringsToChars(DICOM_path), ...
-%         convertStringsToChars(output_path), ...
-%         ncompart = ncompart, ...
-%         fitting_excludebvals = fitting_excludebvals...
-%         );
-% 
-% 
-% % Model: 'No VASC VERDICT, ex. 90, 3000' 
-% elseif strcmp(model_type, 'No VASC VERDICT, ex. 90, 3000')
-% 
-%     ncompart = 1;
-%     fitting_excludebvals = [90, 3000];
-% 
-%     % Run VERDICT processing code
-%     [scheme, Y, fIC, fEES, fVASC, R, rmse] = verdict_Adam( ...
-%         convertStringsToChars(DICOM_path), ...
-%         convertStringsToChars(output_path), ...
-%         ncompart = ncompart, ...
-%         fitting_excludebvals = fitting_excludebvals...
-%         );
-%     
-% % Model: 'RDI, ex. 90, 3000' 
-% elseif strcmp(model_type, 'RDI, ex. 90, 3000')
-% 
-%     ncompart = 1;
-%     fitting_excludebvals = [90, 3000];
-%     fitting = 'RDI';
-% 
-%     % Run VERDICT processing code
-%     [scheme, Y, fIC, fEES, fVASC, R, rmse] = verdict_Adam( ...
-%         convertStringsToChars(DICOM_path), ...
-%         convertStringsToChars(output_path), ...
-%         ncompart = ncompart, ...
-%         fitting_excludebvals = fitting_excludebvals,...
-%         fitting = fitting...
-%         );
-% 
-% 
-% % Model: 'RDI, ex. 90, 3000' 
-% elseif strcmp(model_type, 'RDI, ex. 90, 500, 3000')
-% 
-%     ncompart = 1;
-%     fitting_excludebvals = [90, 500, 3000];
-%     fitting = 'RDI';
-% 
-%     % Run VERDICT processing code
-%     [scheme, Y, fIC, fEES, fVASC, R, rmse] = verdict_Adam( ...
-%         convertStringsToChars(DICOM_path), ...
-%         convertStringsToChars(output_path), ...
-%         ncompart = ncompart, ...
-%         fitting_excludebvals = fitting_excludebvals,...
-%         fitting = fitting...
-%         );
-% 
-% else
-%     disp('Incorrect model specification')
-% 
-% end
 
+save([convertStringsToChars(output_path) '/fIC.mat'], 'fIC')
+save([convertStringsToChars(output_path) '/R.mat'], 'R')
 
 % Save results
 % save([convertStringsToChars(output_path) '/scheme.mat'], 'scheme')
 % save([convertStringsToChars(output_path) '/Y.mat'], 'Y')   
-save([convertStringsToChars(output_path) '/fIC.mat'], 'fIC')
+
 % save([convertStringsToChars(output_path) '/fEES.mat'], 'fEES')
 % save([convertStringsToChars(output_path) '/fVASC.mat'], 'fVASC')
-save([convertStringsToChars(output_path) '/R.mat'], 'R')
+
 % save([convertStringsToChars(output_path) '/rmse.mat'], 'rmse')
 
 end
