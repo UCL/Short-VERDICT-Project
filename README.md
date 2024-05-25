@@ -63,7 +63,7 @@ should be: STUDY_path/PatNum/...images...
 
     3. Output folder is defined. 
 
-This is where the output images from VERDICT processing will be saved.
+This is where the output images from VERDICT processing will be saved (defined in text document ...\output_folder.txt')
 
     4. Scheme folder is defined
 
