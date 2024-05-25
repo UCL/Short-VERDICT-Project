@@ -17,8 +17,6 @@ def callMLP(modeltype,
 
     print(path)
 
-
-    # try:
         
         # Load MLP
     with open(f'{path}/mlp.sav', 'rb') as handle:
@@ -31,21 +29,7 @@ def callMLP(modeltype,
     # Load scaler
     with open(f'{path}/scalerout.sav', 'rb') as handle:
         scalerout = pickle.load(handle)    
-        
-    # except:
-        
-    #     # Load MLP
-    #     with open(f'{path}/mlp_σ={sigma0train}.sav', 'rb') as handle:
-    #         mlp = pickle.load(handle)
-            
-    #     # Load scaler
-    #     with open(f'{path}/scaler_σ={sigma0train}.sav', 'rb') as handle:
-    #         scaler = pickle.load(handle)    
-            
-                      
-    #     # Load scaler
-    #     with open(f'{path}/scalerout_σ={sigma0train}.sav', 'rb') as handle:
-    #         scalerout = pickle.load(handle)    
+         
         
     # Apply scaler
     signals = scaler.transform(signals)

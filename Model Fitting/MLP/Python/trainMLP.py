@@ -22,9 +22,6 @@ def trainMLP(
     FolderPath = rf'C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Code\VERDICT-Screening\General Code\Model Fitting\MLP\My Tests\MLP Models'
 ):
     
-    # # Load randomised parameters and signals for training
-    # ParamsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/params_σ={sigma0train}.mat')['params']
-    # SignalsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/signals_σ={sigma0train}.mat')['Signals']
     
     T2train = int(T2train)
     ParamsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/{noisetype}/T2_{T2train}/sigma_{sigma0train}/params.mat')['params']
@@ -33,22 +30,7 @@ def trainMLP(
     except:
         InputsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/{noisetype}/T2_{T2train}/sigma_{sigma0train}/signals.mat')['Signals']   
     
-    
-    # x=0
-    # try:
-    #     ParamsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/Noise Model - {noisetype}/T2_{T2train}/sigma_{sigma0train}/params.mat')['params']
-    #     try:
-    #         InputsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/Noise Model - {noisetype}/T2_{T2train}/sigma_{sigma0train}/inputs.mat')['inputs']   
-    #     except:
-    #         InputsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/Noise Model - {noisetype}/T2_{T2train}/sigma_{sigma0train}/signals.mat')['Signals']   
-    #     x=1
-        
-    # except:
-    #     ParamsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/params_σ={sigma0train}.mat')['params']
-    #     try:
-    #         InputsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/inputs_σ={sigma0train}.mat')['inputs']   
-    #     except:
-    #         InputsTrain = scipy.io.loadmat(f'{TrainPath}/{modeltype}/{schemename}/signals_σ={sigma0train}.mat')['Signals']   
+      
             
     hidden_layer_sizes = tuple([Nnode for i in range(Nlayer)])
     
@@ -99,12 +81,6 @@ def trainMLP(
     except:
         None
 
-
-    # if x==0:
-    #     # Save mlp and scaler as pickle
-    #     pickle.dump(mlp, open(f'{path}/mlp_σ={sigma0train}.sav', 'wb'))
-    #     pickle.dump(scaler, open(f'{path}/scaler_σ={sigma0train}.sav', 'wb'))
-    #     pickle.dump(scalerout, open(f'{path}/scalerout_σ={sigma0train}.sav', 'wb'))
         
     # else:
     # Save mlp and scaler as pickle
