@@ -1,4 +1,4 @@
-ALL CODE WRITTEN FOR SHORT VERDICT PROJECT
+# ALL CODE WRITTEN FOR SHORT VERDICT PROJECT
 
 Author: Adam Phipps
 
@@ -7,9 +7,9 @@ Email: rmapajp@ucl.ac.uk
 
 ===========================================================================
 
-\textbf{MATLAB REQUIREMENTS}
+## MATLAB REQUIREMENTS
 
-MATLAB version R2022a or later for compatibility with python version 3.10
+MATLAB version R2022a or later for compatibility with Python version 3.10
 
 Required Toolboxes:
 
@@ -19,11 +19,11 @@ Required Toolboxes:
 
 ===========================================================================
 
-\textbf{PYTHON REQUIREMENTS}
+## PYTHON REQUIREMENTS
 
 Install Python 3.10
 
-Install folloing packages:
+Install following packages:
 
     - numpy
     - scipy
@@ -46,9 +46,9 @@ MATLAB documentation for Python environment: https://uk.mathworks.com/help/matla
 
 ===========================================================================
 
-\textbf{RUN VERDICT PROCESSING}
+## RUN VERDICT PROCESSING
 
-To run VERDICT processing, run script: RUN VERDICT/Run_VERDICT.m
+To run VERDICT processing, run script: **RUN VERDICT/Run_VERDICT.m**
 
 Before running this script, ensure:
     
@@ -87,11 +87,11 @@ If ADC calculation also wanted, set calcADC = true and define maximum b value to
 
 ===========================================================================
 
-\textbf{TRAINING A NEW MLP NETWORK}
+## TRAINING A NEW MLP NETWORK
 
     1. Create training data for model
 
-Run script \texttt{...Short-VERDICT-Project/Model Fitting/MLP/MATLAB/createNewTrainingData.m}
+Run script **...Short-VERDICT-Project/Model Fitting/MLP/MATLAB/createNewTrainingData.m**
 
 First, ensure that:
 
@@ -103,12 +103,12 @@ First, ensure that:
 
     - Protocols to create traingin data for are defined (modeltypes, schemenames) (cell arrays of char vectors)
 
-**Meta data for creating training data saved as: Training data folder/.../META.mat**
+(Meta data for creating training data saved as: Training data folder/.../META.mat)
 
 
     2. Train MLP network
 
-Run function 'trainMLP(modeltype, schemename, opts) 
+Run function **trainMLP(modeltype, schemename, opts)**
 
 (...Short-VERDICT-Project/Model Fitting/MLP/MATLAB/trainMLP.m)
 
