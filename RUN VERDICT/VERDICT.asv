@@ -3,31 +3,32 @@ function VERDICT(pat_num, opts)
 
 % MATLAB function to carry out VERDICT processing 
 
-% INNOVATE patient number and VERDICT model type specified as inputs
-
-% Model type can be: 'Original' or 'No VASC'
-
 arguments
     pat_num % INNOVATE patient number
     opts.modeltype = 'Original VERDICT' % Type of VERDICT model to fit
     opts.schemename = 'Original Full' % Name of imaging scheme
     opts.fittingtechnique = "AMICO" % Fitting framwork to use
 
+    % Solver for AMICO fitting
+    opts.solver = 'lsqnonnegTikhonov'
+
+    % Noise parameters used for MLP training
     opts.noisetype = 'Rice'
-    opts.sigma0train = 0.05 % Noise level used in MLP training
+    opts.sigma0train = 0.05 
     opts.T2train = 10000
     
-    opts.STUDY_path = "D:\UCL PhD Imaging Data\INNOVATE VERDICT\" % Path to INNOVATE imaging folder
-    opts.parent_folder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Outputs" % Parent folder to save outputs
-    opts.schemesfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Code\VERDICT-Screening\General Code\Model Fitting\MLP\My Tests\Schemes"
-    opts.modelsfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Code\VERDICT-Screening\General Code\Model Fitting\MLP\My Tests\New MLP Models"
-    opts.pythonfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\VERDICT Screening\Code\VERDICT-Screening\General Code\Model Fitting\MLP\My Tests\Python"
-
-    opts.solver = 'lsqnonnegTikhonov'
+    % Define folders
+    opts.STUDY_path = "" 
+    opts.parent_folder = "" 
+    opts.schemesfolder = ""
+    opts.modelsfolder = ""
+    opts.pythonfolder = ""
 
     % Other calculations
     opts.calcADC = false
     opts.vADCbmax = 1001
+
+    opts.exclude_bvals = []
 
 end
 
@@ -66,9 +67,6 @@ switch opts.modeltype
         ncompart = 2;
         fitting = 'VERDICT';
         Rs = linspace(0.1, 15.1, 17);
-
-
-        % Decide b values to be excluded from f
 
 
         % Run VERDICT processing code
@@ -179,16 +177,11 @@ switch opts.modeltype
 end
 
 
-
-save([convertStringsToChars(output_path) '/fIC.mat'], 'fIC')
-save([convertStringsToChars(output_path) '/R.mat'], 'R')
 % Save results
-% save([convertStringsToChars(output_path) '/scheme.mat'], 'scheme')
-% save([convertStringsToChars(output_path) '/Y.mat'], 'Y')   
-
-% save([convertStringsToChars(output_path) '/fEES.mat'], 'fEES')
-% save([convertStringsToChars(output_path) '/fVASC.mat'], 'fVASC')
-
+save([convertStringsToChars(output_path) '/fIC.mat'], 'fIC')
+save([convertStringsToChars(output_path) '/fEES.mat'], 'fEES')
+save([convertStringsToChars(output_path) '/fVASC.mat'], 'fVASC')
+save([convertStringsToChars(output_path) '/R.mat'], 'R')
 % save([convertStringsToChars(output_path) '/rmse.mat'], 'rmse')
 
 end

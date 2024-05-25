@@ -5,11 +5,11 @@
 % % INNOVATE
 % STUDY_path = "C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAGES";
 
-% % Patient volunteers (Full VERDICT)
-% STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Original VERDICT";
+% Patient volunteers (Full VERDICT)
+STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Original VERDICT";
 
-% Patient volunteers (Short VERDICT)
-STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Short VERDICT";
+% % Patient volunteers (Short VERDICT)
+% STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Short VERDICT";
 
 %% Define patient numbers
 
@@ -42,7 +42,7 @@ pythonfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Y
 modeltype = 'Original VERDICT'; 
 
 % === Scheme name
-schemename = 'Short Scheme v1';
+schemename = 'Original ex905003000';
 
 % === fitting technique
 fittingtechnique =   'MLP';
