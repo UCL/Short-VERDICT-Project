@@ -7,7 +7,7 @@ Email: rmapajp@ucl.ac.uk
 
 ===========================================================================
 
-%%%%% MATLAB REQUIREMENTS
+\textbf{MATLAB REQUIREMENTS}
 
 MATLAB version R2022a or later for compatibility with python version 3.10
 
@@ -19,19 +19,20 @@ Required Toolboxes:
 
 ===========================================================================
 
-%%%%% PYTHON REQUIREMENTS
+\textbf{PYTHON REQUIREMENTS}
 
 Install Python 3.10
 
 Install folloing packages:
-- numpy
-- scipy
-- matplotlib
-- scikit-learn
-- pydicom
-- openpyxl
-- pandas
-- scikit-image
+
+    - numpy
+    - scipy
+    - matplotlib
+    - scikit-learn
+    - pydicom
+    - openpyxl
+    - pandas
+    - scikit-image
 
 (run command: 'python -m pip install NAME' in folder where python executable is saved)
 
@@ -41,7 +42,11 @@ MATLAB documentation for Python environment: https://uk.mathworks.com/help/matla
 
 ===========================================================================
 
-%%%%% RUN VERDICT PROCESSING
+
+
+===========================================================================
+
+\textbf{RUN VERDICT PROCESSING}
 
 To run VERDICT processing, run script: RUN VERDICT/Run_VERDICT.m
 
@@ -82,17 +87,20 @@ If ADC calculation also wanted, set calcADC = true and define maximum b value to
 
 ===========================================================================
 
-%%%%% TRAINING A NEW MLP NETWORK
+\textbf{TRAINING A NEW MLP NETWORK}
 
     1. Create training data for model
 
-Run script ...Short-VERDICT-Project/Model Fitting/MLP/MATLAB/createNewTrainingData.m
+Run script \texttt{...Short-VERDICT-Project/Model Fitting/MLP/MATLAB/createNewTrainingData.m}
 
 First, ensure that:
 
     - Ntrain is defined (number of training samples)
+
     - Parameters for image noise are defined ('noisetype', 'T2', 'sigma0')
+
     - Training data folder is defined (where data will be saved)
+
     - Protocols to create traingin data for are defined (modeltypes, schemenames) (cell arrays of char vectors)
 
 **Meta data for creating training data saved as: Training data folder/.../META.mat**
@@ -107,7 +115,9 @@ Run function 'trainMLP(modeltype, schemename, opts)
 Each time function is run, ensure that:
 
     - modeltype and schemename define correctly
+
     - Parameters for image noise are define in opts (noisetype, sigma0train, T2train)
+
     - Following folders are correctly defined:
 
         pythonfolder - where python scripts are saved
