@@ -1,12 +1,14 @@
 % MATLAB script to run VERDICT processing on specified patients
+% Adapted by David Atkinson from code written by Adam Phipps
 
+dataFolder = '/' ;
 %% Define study path (path to folder containing patients)
 % 
 % % INNOVATE
 % STUDY_path = "C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAGES";
 
 % Patient volunteers (Full VERDICT)
-STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Original VERDICT";
+STUDY_path = fullfile(dataFolder, 'Imaging Data\Patient Volunteers\Original VERDICT');
 
 % % Patient volunteers (Short VERDICT)
 % STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Short VERDICT";
@@ -24,16 +26,17 @@ PatNums = {"shV_20240410"};
 %% DEFINE FOLDERS
 
 % Define output folder
-OutputFolder = string(fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\output_folder.txt"));
+relativeOutputFolder = string(fileread(fullfile(dataFolder,'Code\Short-VERDICT-Project\relative_output_folder.txt')));
+OutputFolder = fullfile(dataFolder,relativeOutputFolder) ;
 
 % Define schemes folder
-schemesfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Model Fitting\Schemes";
+schemesfolder = fullfile(dataFolder, 'Code\Short-VERDICT-Project\Model Fitting\Schemes');
 
 % Define models folder
-modelsfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Model Fitting\MLP\MLP Models";
+modelsfolder = fullfile(dataFolder,'Code\Short-VERDICT-Project\Model Fitting\MLP\MLP Models');
 
 % Define python folder
-pythonfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Model Fitting\MLP\Python";
+pythonfolder = fullfile(dataFolder,'Code\Short-VERDICT-Project\Model Fitting\MLP\Python');
 
 
 %% DEFINE VERDICT PROTOCOL
