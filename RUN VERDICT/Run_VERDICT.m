@@ -2,23 +2,23 @@
 
 %% Define study path (path to folder containing patients)
 % 
-% % INNOVATE
-% STUDY_path = "C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAGES";
+% INNOVATE
+STUDY_path = "C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAGES";
 
-% Patient volunteers (Full VERDICT)
-STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Original VERDICT";
+% % Patient volunteers (Full VERDICT)
+% STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Original VERDICT";
 
 % % Patient volunteers (Short VERDICT)
 % STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Short VERDICT";
 
-
-% MARTA
-STUDY_path = "C:\Users\adam\OneDrive\Desktop\Marta\AP Organised";
+% 
+% % MARTA
+% STUDY_path = "C:\Users\adam\OneDrive\Desktop\Marta\AP Organised";
 
 %% Define patient numbers
 
 % FOR VOLUNTEERS
-PatNums = {"HMU_056"};%"HMU_066";"HMU_069"; "HMU_076"; "HMU_084"; "HMU_121"; "HMU_176"; "HMU_180"; "HMU_201"};
+PatNums = {"BAR_003"};%"HMU_066";"HMU_069"; "HMU_076"; "HMU_084"; "HMU_121"; "HMU_176"; "HMU_180"; "HMU_201"};
 
 % % FOR INNOVATE
 % x = dir(STUDY_path);
@@ -28,8 +28,8 @@ PatNums = {"HMU_056"};%"HMU_066";"HMU_069"; "HMU_076"; "HMU_084"; "HMU_121"; "HM
 %% DEFINE FOLDERS
 
 % Define output folder
-% OutputFolder = string(fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\output_folder.txt"));
-OutputFolder= "C:\Users\adam\OneDrive\Desktop\Marta\AP Organised\VERDICT OUTPUTS";
+OutputFolder = string(fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\output_folder.txt"));
+% OutputFolder= "C:\Users\adam\OneDrive\Desktop\Marta\AP Organised\VERDICT OUTPUTS";
 
 
 % Define schemes folder
@@ -45,10 +45,10 @@ pythonfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Y
 %% DEFINE VERDICT PROTOCOL
 
 % === Model type
-modeltype = 'No VASC VERDICT'; 
+modeltype = 'Original VERDICT'; 
 
 % === Scheme name
-schemename = 'Original ex905003000';
+schemename = 'Original Full';
 
 % === fitting technique
 fittingtechnique =   'MLP';
