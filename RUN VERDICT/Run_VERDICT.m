@@ -11,10 +11,14 @@ STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Yea
 % % Patient volunteers (Short VERDICT)
 % STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Short VERDICT";
 
+
+% MARTA
+STUDY_path = "C:\Users\adam\OneDrive\Desktop\Marta\AP Organised";
+
 %% Define patient numbers
 
 % FOR VOLUNTEERS
-PatNums = {"shV_20240410"};
+PatNums = {"HMU_056"};%"HMU_066";"HMU_069"; "HMU_076"; "HMU_084"; "HMU_121"; "HMU_176"; "HMU_180"; "HMU_201"};
 
 % % FOR INNOVATE
 % x = dir(STUDY_path);
@@ -24,7 +28,9 @@ PatNums = {"shV_20240410"};
 %% DEFINE FOLDERS
 
 % Define output folder
-OutputFolder = string(fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\output_folder.txt"));
+% OutputFolder = string(fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\output_folder.txt"));
+OutputFolder= "C:\Users\adam\OneDrive\Desktop\Marta\AP Organised\VERDICT OUTPUTS";
+
 
 % Define schemes folder
 schemesfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Model Fitting\Schemes";
@@ -39,7 +45,7 @@ pythonfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Y
 %% DEFINE VERDICT PROTOCOL
 
 % === Model type
-modeltype = 'Original VERDICT'; 
+modeltype = 'No VASC VERDICT'; 
 
 % === Scheme name
 schemename = 'Original ex905003000';
@@ -55,7 +61,7 @@ T2train = 10000;
 % === ADC
 calcADC = true;
 % Max b value
-vADCbmax = 1001;
+vADCbmax = 1501;
 
 
 % Run VERDICT processing
