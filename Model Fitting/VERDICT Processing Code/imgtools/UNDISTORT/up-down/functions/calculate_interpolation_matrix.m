@@ -1,0 +1,29 @@
+function interpolation_matrix=calculate_interpolation_matrix(niftypath,data_path,t2w,epi);
+% flag = system([niftypath 'reg_aladin' ' -ref ' data_path, 't2w.nii '...
+% ' -flo ' data_path, 'epi2.nii ',  ...
+% ' -aff ' data_path, 'mat2.txt ',  ...
+% ' -res ' data_path, 'resampled2.nii']);
+% uw=load_nii('C:\Users\Usman\Desktop\FROMKCLPC_21_10_2016\resampled2.nii');
+% cc4=imrotate(double(uw.img),0);
+% eshow(cc4)
+% uw=load_nii('C:\Users\Usman\Desktop\FROMKCLPC_21_10_2016\t2w.nii');
+% cc4=imrotate(double(uw.img),0);
+% eshow(cc4)
+% flag = system([niftypath 'reg_transform' ' -ref ' data_path, 't2w.nii '...
+% ' -disp ' data_path, 'mat2.txt ',data_path, 'output.nii '  ...
+% ]);uw=load_nii('C:\Users\Usman\Desktop\FROMKCLPC_21_10_2016\output.nii');
+% cc4=imrotate(double(uw.img),0);
+% [interpolation_matrix1]=create_small_interpolation_matrix(im22,squeeze(double(cc4(:,:,1,1,1))),squeeze(double(cc4(:,:,1,1,2))));
+flag = system([fullfile(niftypath, 'reg_aladin') ' -ref ' fullfile(data_path, t2w) ...
+' -flo ' fullfile(data_path,epi),  ...
+' -aff ' fullfile(data_path, 'mat.txt'),' ',  ...
+' -res ' fullfile(data_path, 'resampled.nii')]);
+
+flag = system([fullfile(niftypath, 'reg_transform') ' -ref ' fullfile(data_path, t2w)...
+' -disp ' fullfile(data_path, 'mat.txt'),' ',fullfile(data_path, 'output.nii')]);
+
+uw=load_nii(fullfile(data_path,'output.nii'));
+motion_x_y=double(uw.img);
+epi_im=(load_nii(fullfile(data_path,epi)));
+[interpolation_matrix]=create_small_interpolation_matrix(double(epi_im.img),squeeze(double(motion_x_y(:,:,1))),squeeze(double(motion_x_y(:,:,2))));
+end

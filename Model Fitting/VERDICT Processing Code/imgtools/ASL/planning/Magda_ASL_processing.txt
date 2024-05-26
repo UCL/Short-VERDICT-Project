@@ -1,0 +1,93 @@
+From "Recommended Implementation of Arterial Spin-Labeled Perfusion MRI for Clinical Applications: A Consensus of the ISMRM Perfusion Study Group and the European Consortium for ASL in Dementia"
+Magnetic Resonance in Medicine 00:00–00 (2014)
+David C. Alsop et al
+
+Table 1
+Recommended Labeling Parameters
+Parameter Value
+PCASL labeling duration 1800 ms
+PCASL PLD: neonates 2000 ms
+PCASL PLD: children 1500 ms
+PCASL PLD: healthy subjects <70 y 1800 ms
+PCASL PLD: healthy subjects >70 y 2000 ms
+PCASL PLD: adult clinical patients 2000 ms
+PCASL: average labeling gradient 1 mT/m
+PCASL: slice-selective labeling gradient 10 mT/m
+PCASL: average B1 1.5 mT
+PASL TI1 800 ms
+PASL TI Use PCASL PLD
+(from above)
+PASL labeling slab thickness 15–20 cm
+
+
+
+Table 3
+Values To Be Used in Quantification of ASL Data
+Parameter Value
+l (blood–brain partition coefficient) 0.9 mL/g (74)
+T1,blood at 3.0T 1650 ms (10)
+T1,blood at 1.5T 1350 ms (75)
+a (labeling efficiency) for PCASL 0.85 (17)
+a (labeling efficiency) for PASL 0.98 (19)
+
+
+
+
+### pCASL processing for POPPY study ###
+# Magda Sokolska m.sokolska@ucl.ac.uk#
+
+1. Convert images with MRIConvert. Make sure that the option Apply Rescale is unticked.
+2. use dcmdump to print all scaling factors and save them in the file scaling.txt 
+dcmdump IM_* --search "0018,1030" -s --search "2005,100e" -s --search "2005,100d" -s --search "0028,1053" -s --search "0028,1052" >scaling.txt
+
+(0018,1030) LO [WIP pCASL_main SENSE]                   #  34, 1 ProtocolName
+(2005,100e) FL 0.0023691582                             #   4, 1 Unknown Tag & Data - this is SS 
+(2005,100d) FL 0                                        #   4, 1 Unknown Tag & Data 
+(0028,1053) DS [1.29694749694749]                       #  16, 1 RescaleSlope       - this is RS
+(0028,1052) DS [0]    									#   2, 1 RescaleIntercept 
+
+The scaling factor 'scl_slope' in a nifti headed should match RS from dcmdump. To check nifti headed use fslhd
+
+3. Divide by both SS and RS factors using fslmaths
+fslmaths pCASL_main -div 0.00237 -div 1.297 pCASL_scaled 
+fslmaths pCASL_calib -div ???? -div 1.297 M0_scaled
+
+After divison the 'scl_slope' in nifti should be 1.
+
+@@@@ simple registration (optional). This one registers images to the one in the middle one like in fmri @@@@@
+mcflirt -in pCASL_main -out pCASL_main_mcflirt
+if using registration, continue with pCASL_main_mcflirt rather than pCASL_main
+@@@@
+
+4. Create difference image: controls minus tag using asl_file (in fsl). However, this assumes tag control order in the data (we get control tag) so need to invert the sign by *-1 
+asl_file --data=pCASL_scaled --iaf=ct --ntis=1 --diff --out=differences
+fslmaths differences -Tmean mean
+
+5. Run oxford ASL to obtain perfusion image - accounting for differences in PLDs due to delays in EPI acquisition and T1 relaxation
+
+T1blood = 1.65 (also can be calculated from: 1/(0.5*Htc + 0.37)
+labelig duration =1.65
+T1=$T1blood
+lambda=0.9
+labeling efficiency alpha=0.85
+# for poppy
+time difference between slices (from simulator) =0.035 
+#TI=PLD+labDur=2+1.65
+TI=3.45
+
+oxford_asl -i differences --tis 3.65 --bolus 1.65 --casl --t1b 1.65 --t1 1.65 --slicedt 0.041
+
+6. Copy M0 image to native space folder created by oxford asl and apply gaussian filter to smooth the image
+cd native_space/
+fslmaths M0_scaled.nii.gz -kernel gauss 3 -fmean M0
+
+7. use the calibration image to get the data in the correct units
+
+fslmaths perfusion.nii.gz -div M0 -div 0.85 -mul 6000 -mul 0.9 CBF.nii.gz
+
+8. To mask out the parts of the image that are not brain, a binary mask can be used:
+
+(A simple mask can be created by thresholding M0 image (the value 70000 is chosen empirically) :
+fslmaths M0_scaled.nii.gz -thrP 25 -bin mask_bin )
+
+fslmaths CBF -mul mask_bin CBF_masked 

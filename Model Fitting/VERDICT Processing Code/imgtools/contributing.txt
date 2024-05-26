@@ -1,0 +1,9 @@
+Contributing
+
+Thank you for considering contributing to this repository.
+
+We encourage contributions on topic branches with the master branch reserved for more stable code.
+
+Dependence on external code or downloads: If your code depends on external code or downloads (e.g. FileExchange), then unless the copyright is clear within the files, it is best to place this in a separate location, add this location to the MATLAB path and place a check in your code for the existence so that the users can be told where to download the code.
+
+
