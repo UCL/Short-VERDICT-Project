@@ -1,7 +1,9 @@
 
 function VERDICT(pat_num, opts)
-
-% MATLAB function to carry out VERDICT processing 
+% VERDICT MATLAB function to carry out VERDICT processing (Adam Phipps)
+% VERDICT(pat_num, opts)
+%
+% Adam Phipps, adapted by David Atkinson
 
 arguments
     pat_num % INNOVATE patient number
@@ -32,11 +34,11 @@ arguments
 end
 
 % Define DICOM folder path
-DICOM_path = join( [opts.STUDY_path "/" pat_num "\scans"], "");
+DICOM_path = fullfile( opts.STUDY_path, pat_num, 'scans');
 if exist(DICOM_path, "dir")
     disp('')
 else
-    DICOM_path = join( [opts.STUDY_path "/" pat_num], "");
+    DICOM_path = fullfile( opts.STUDY_path, pat_num);
 end
 
 
@@ -44,11 +46,15 @@ switch opts.fittingtechnique
 
     case 'MLP'
         % Define output folder
-        output_path = join([opts.parent_folder "/VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num "/" string(opts.noisetype) "/T2_" string(opts.T2train) "/sigma_" num2str(opts.sigma0train)], "");
+        output_path = fullfile(opts.parent_folder, 'New VERDICT outputs', ...
+            string(opts.modeltype), string(opts.schemename), string(opts.fittingtechnique), ...
+            pat_num, string(opts.noisetype), 'T2_', string(opts.T2train), 'sigma_', num2str(opts.sigma0train));
 
     case 'AMICO'
         % Define output folder
-        output_path = join([opts.parent_folder "/VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num ], "");
+        output_path = fullfile(opts.parent_folder, 'New VERDICT outputs', ...
+            string(opts.modeltype), string(opts.schemename), string(opts.fittingtechnique), ...
+            pat_num);
 
 end
 
