@@ -1,24 +1,28 @@
 % MATLAB script to run VERDICT processing on specified patients
+% Adapted by David Atkinson from code written by Adam Phipps
+
+dataFolder = '/Users/davidatkinson/Library/CloudStorage/OneDrive-UniversityCollegeLondon/data/AdamshVERDICT' ;
+
+% This should be changed by putting within a MATLAB project and then files
+% are on path.
+codeFolder = '/Users/davidatkinson/matlab/Short-VERDICT-Project' ;
 
 %% Define study path (path to folder containing patients)
 % 
-% INNOVATE
-STUDY_path = "C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAGES";
+% % INNOVATE
+% STUDY_path = "C:\Users\adam\OneDrive\Desktop\INNOVATE STUDY COHORT VERDICT IMAGES";
 
-% % Patient volunteers (Full VERDICT)
-% STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Original VERDICT";
+% Patient volunteers (Full VERDICT)
+STUDY_path = fullfile(dataFolder, 'Imaging Data','Patient Volunteers','Original VERDICT');
 
 % % Patient volunteers (Short VERDICT)
 % STUDY_path = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Imaging Data\Patient Volunteers\Short VERDICT";
 
-% 
-% % MARTA
-% STUDY_path = "C:\Users\adam\OneDrive\Desktop\Marta\AP Organised";
-
 %% Define patient numbers
 
 % FOR VOLUNTEERS
-PatNums = {"BAR_003"};%"HMU_066";"HMU_069"; "HMU_076"; "HMU_084"; "HMU_121"; "HMU_176"; "HMU_180"; "HMU_201"};
+% PatNums = {"BAR_003"};%"HMU_066";"HMU_069"; "HMU_076"; "HMU_084"; "HMU_121"; "HMU_176"; "HMU_180"; "HMU_201"};
+PatNums = {"shV_20240410"};
 
 % % FOR INNOVATE
 % x = dir(STUDY_path);
@@ -28,18 +32,17 @@ PatNums = {"BAR_003"};%"HMU_066";"HMU_069"; "HMU_076"; "HMU_084"; "HMU_121"; "HM
 %% DEFINE FOLDERS
 
 % Define output folder
-OutputFolder = string(fileread("C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\output_folder.txt"));
-% OutputFolder= "C:\Users\adam\OneDrive\Desktop\Marta\AP Organised\VERDICT OUTPUTS";
-
+relativeOutputFolder = string(fileread(fullfile(codeFolder,'relative_output_folder.txt')));
+OutputFolder = fullfile(dataFolder,relativeOutputFolder) ;
 
 % Define schemes folder
-schemesfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Model Fitting\Schemes";
+schemesfolder = fullfile(codeFolder, 'Model Fitting','Schemes');
 
 % Define models folder
-modelsfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Model Fitting\MLP\MLP Models";
+modelsfolder = fullfile(codeFolder,'Model Fitting','MLP','MLP Models');
 
 % Define python folder
-pythonfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Year 1\Projects\Short VERDICT Project\Code\Short-VERDICT-Project\Model Fitting\MLP\Python";
+pythonfolder = fullfile(codeFolder,'Model Fitting','MLP','Python');
 
 
 %% DEFINE VERDICT PROTOCOL
@@ -48,7 +51,7 @@ pythonfolder = "C:\Users\adam\OneDrive - University College London\UCL PhD\PhD Y
 modeltype = 'Original VERDICT'; 
 
 % === Scheme name
-schemename = 'Original Full';
+schemename = 'Original ex905003000';
 
 % === fitting technique
 fittingtechnique =   'MLP';
