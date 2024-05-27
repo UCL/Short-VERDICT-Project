@@ -44,11 +44,11 @@ switch opts.fittingtechnique
 
     case 'MLP'
         % Define output folder
-        output_path = join([opts.parent_folder "/New VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num "/" string(opts.noisetype) "/T2_" string(opts.T2train) "/sigma_" num2str(opts.sigma0train)], "");
+        output_path = join([opts.parent_folder "/VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num "/" string(opts.noisetype) "/T2_" string(opts.T2train) "/sigma_" num2str(opts.sigma0train)], "");
 
     case 'AMICO'
         % Define output folder
-        output_path = join([opts.parent_folder "/New VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num ], "");
+        output_path = join([opts.parent_folder "/VERDICT outputs/" string(opts.modeltype) "/" string(opts.schemename) "/" string(opts.fittingtechnique) "/" pat_num ], "");
 
 end
 
