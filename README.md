@@ -40,15 +40,15 @@ Run command: 'pyenv' in MATLAB command line to see if python environment is load
 
 MATLAB documentation for Python environment: https://uk.mathworks.com/help/matlab/ref/pyenv.html
 
-If `pyenv` in MATLAB reveals a version that is to old (typically in XCode), see 
-information about Python versions on a Mac: https://mac.install.guide/python/
-One option to inatall a different version is to install homebrew, then 
+If on a Mac and `pyenv` in MATLAB reveals a version that is to old (e.g. in XCode), see 
+information about Python versions: https://mac.install.guide/python/
+One option to install homebrew, then install the desired Python version:
 ```
 brew install python@3.10
 pip3.10 install numpy
 ...
 ```
-Then the MATLAB command will be something like: `pyenv(Version="/usr/local/bin/python3.10")`
+Then the MATLAB command needed will be something like: `pyenv(Version="/usr/local/bin/python3.10")`
 
 
 ===========================================================================
